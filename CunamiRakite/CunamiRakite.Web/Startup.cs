@@ -1,6 +1,7 @@
 using CunamiRakite.Core.Repository;
 using CunamiRakite.Core.Services;
 using CunamiRakite.InMemory;
+using CunamiRakite.Web.Properties.Resources.Categories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -31,6 +32,7 @@ namespace CunamiRakite.Web
         {
 
             services.AddControllers();
+            services.AddScoped<CategoryFactory>();
             services.AddScoped<CategoryService>();
             services.AddSingleton<ICategoryRepository, InMemoryCategoryRepository>();
             services.AddSwaggerGen(c =>
