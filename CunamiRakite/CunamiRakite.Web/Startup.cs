@@ -1,3 +1,6 @@
+using CunamiRakite.Core.Repository;
+using CunamiRakite.Core.Services;
+using CunamiRakite.InMemory;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -28,6 +31,8 @@ namespace CunamiRakite.Web
         {
 
             services.AddControllers();
+            services.AddScoped<CategoryService>();
+            services.AddSingleton<ICategoryRepository, InMemoryCategoryRepository>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CunamiRakite.Web", Version = "v1" });
