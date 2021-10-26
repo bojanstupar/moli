@@ -1,5 +1,7 @@
-﻿using CunamiRakite.Core.Repository;
+﻿using CunamiRakite.Core.Entities;
+using CunamiRakite.Core.Repository;
 using CunamiRakite.Core.Services;
+using CunamiRakite.Web.Properties.Resources.Categories.Dto;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -26,6 +28,8 @@ namespace CunamiRakite.Web.Properties.Resources.Categories
             this.categoryFactory = categoryFactory;
         }
 
+       
+
 
         [HttpGet("{id}")]
         public IActionResult GetOne(Guid id) {
@@ -45,6 +49,17 @@ namespace CunamiRakite.Web.Properties.Resources.Categories
             categoryRepository.Remove(id);
 
             return NoContent();
+        }
+
+        [HttpPost]
+        public IActionResult Save(CategoryDto dto) {
+
+            var createCategory = CategoryFactory.Create(dto);
+                if (createCategory.IsFailure) return BadRequest(createCategory.Error);
+
+            categoryService.Save(createCategory.Value);
+
+            return Created("api/category/{createCategory.Value.Id}", string.Empty);
         }
     }
 }
